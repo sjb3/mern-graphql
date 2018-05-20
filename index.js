@@ -99,6 +99,7 @@
 const { ApolloServer, gql } = require('apollo-server');
 const crypto = require('crypto');
 
+
 const db = {
   users: [
     {
@@ -147,6 +148,7 @@ const typeDefs = gql`
      id: ID!
      body: String!
      createdAt: String!
+  }
 `;
 
 const resolvers = {
@@ -155,6 +157,7 @@ const resolvers = {
     user: args => db.users.find(user => user.id === args.id),
     messages: () => db.messages,
   },
+
   Mutation: {
     addUser: ({ email, name }) => {
       const user = {
@@ -166,6 +169,7 @@ const resolvers = {
       return user;
     },
   },
+
   User: {
     messages: (id) => {
       db.messages.filter(message => message.userId === id);
@@ -176,5 +180,5 @@ const resolvers = {
 const server = new ApolloServer({ typeDefs, resolvers });
 
 server.listen().then((serverInfo) => {
-  console.log(`Apollof Server running at ${serverInfo.url}`);
+  console.log(`>>>>> Apollo Server running at ${serverInfo.url}`);
 });
